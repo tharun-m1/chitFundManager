@@ -4,6 +4,7 @@ const Admin = require("../../models/admin");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const errorHandler = require("../../utils/error");
 //------------Sign Up-------------------------------------------------------------------
 
 router.post("/signup", async (req, res, next) => {
@@ -16,9 +17,7 @@ router.post("/signup", async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({
-      message: "Failed to create User.",
-    });
+    next(err);
   }
 });
 //--------------------------------------------------------------------------------------
@@ -50,9 +49,7 @@ router.post("/login", async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({
-      message: "Failed to find Admin",
-    });
+    next(err);
   }
 });
 //----------------------------------------------------------------------------------------
