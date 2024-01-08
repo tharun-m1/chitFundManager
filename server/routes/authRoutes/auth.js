@@ -29,13 +29,13 @@ router.post("/login", async (req, res, next) => {
     const { email, password } = req.body;
     const adminFound = await Admin.findOne({ email });
     if (!adminFound) {
-      return res.status(500).json({
+      return res.status(404).json({
         message: "User doesn't exist",
       });
     }
     const passMatched = await bcrypt.compare(password, adminFound.password);
     if (!passMatched) {
-      return res.status(500).json({
+      return res.status(401).json({
         message: "Incorrect Credentials",
       });
     }
